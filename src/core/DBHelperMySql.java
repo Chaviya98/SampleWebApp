@@ -1,7 +1,6 @@
 package core;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
+
 public class DBHelperMySql {
     public Statement connect(){
         Connection connection = null;
@@ -73,5 +72,36 @@ public class DBHelperMySql {
                 e.printStackTrace();
             }
         }
+    }
+    public void display(){
+        String temp = "";
+        Statement stmt = connect();
+        try
+        {
+            ResultSet resultSet = stmt.executeQuery("SELECT * FROM ITEMS ");
+            ResultSetMetaData rsmd = resultSet.getMetaData();
+            int columnsNumber = rsmd.getColumnCount();
+            while (resultSet.next()) {
+
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = resultSet.getString(i);
+                    System.out.print(columnValue + " " + rsmd.getColumnName(i));
+
+                }
+                System.out.println("");
+            }
+            System.out.println();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }
