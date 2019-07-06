@@ -45,7 +45,7 @@ public class DBHelperMySql {
         try
         {
 
-            stmt.execute("delete from ITEMS where ID in ('"+bookID+"')");
+            stmt.execute("DELETE FROM ITEMS WHERE ID IN ('"+bookID+"')");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -57,5 +57,21 @@ public class DBHelperMySql {
             }
         }
     }
+    public void update(String bookID,String bookTitle,String bookPrice){
+        Statement stmt = connect();
+        try
+        {
 
+            stmt.execute("UPDATE ITEMS SET TITLE =('"+bookTitle+"'),PRICE = ('"+bookPrice+"')WHERE ID = ('"+bookID+"')");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
