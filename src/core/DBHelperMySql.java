@@ -3,7 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 public class DBHelperMySql {
-    public void connect(String bookID,String bookTitle,String bookPrice){
+    public Statement connect(){
         Connection connection = null;
         Statement stmt = null;
         try
@@ -13,6 +13,20 @@ public class DBHelperMySql {
                     .getConnection("jdbc:mysql://localhost:3306/bookitems", "root", "");
 
             stmt = connection.createStatement();
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stmt;
+
+    }
+
+    public void add(String bookID,String bookTitle,String bookPrice){
+        Statement stmt = connect();
+        try
+        {
+
             stmt.execute("INSERT INTO ITEMS (ID,TITLE,PRICE) "
                     + "VALUES ("+bookID+",'"+bookTitle+"',"+bookPrice+")");
         }
@@ -21,13 +35,27 @@ public class DBHelperMySql {
         }finally {
             try {
                 stmt.close();
-                connection.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
     }
+    public void delete(String bookID){
+        Statement stmt = connect();
+        try
+        {
 
+            stmt.execute("delete from ITEMS where ID in ('"+bookID+"')");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                stmt.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

@@ -1,4 +1,4 @@
-package chaveen.e;
+package service;
 
 import core.DBHelperMySql;
 
@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import core.Book;
 
 /**
- * Servlet implementation class HelloServlet
+ * Servlet implementation class InsertData
  */
-@WebServlet("/helloServlet")
-public class HelloServlet extends HttpServlet {
+@WebServlet("/insertData")
+public class InsertData extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public String bookID;
 	public String bookTitle;
@@ -25,7 +25,7 @@ public class HelloServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HelloServlet() {
+    public InsertData() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,7 +42,7 @@ public class HelloServlet extends HttpServlet {
 		writer.println("<h1>Hello Your Book Deatils - Book ID " + bookID + "\n" + " Book Title "+bookTitle+
 				"\n" + " Book Price "+bookPrice+"</h1>");
 		DBHelperMySql obj = new DBHelperMySql();
-		obj.connect(bookID,bookTitle,bookPrice);
+		obj.add(bookID,bookTitle,bookPrice);
 		writer.close();
 	}
 

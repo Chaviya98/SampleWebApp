@@ -5,11 +5,11 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 <!--  <servlet>
-    <servlet-name>HelloServlet</servlet-name>
-    <servlet-class>chaveen.e.HelloServlet</servlet-class>
+    <servlet-name>InsertData</servlet-name>
+    <servlet-class>chaveen.e.InsertDataservlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>HelloServlet</servlet-name>
-    <url-pattern>SampleWebApp/HelloServlet</url-pattern>
+    <servlet-name>InsertData</servlet-name>
+    <url-pattern>SampleWebApp/InsertData</url-pattern>
   </servlet-mapping>-->
 </web-app>
