@@ -47,4 +47,8 @@ public class DBHelperMongoDB {
         Bson updateDoc = new Document("$set",newData);
         collection.updateOne(old,updateDoc);
     }
+    public void display(){
+        System.out.println(collection.find());
+
+    }
 }

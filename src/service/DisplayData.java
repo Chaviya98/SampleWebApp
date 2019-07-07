@@ -1,5 +1,6 @@
 package service;
 
+import core.DBHelperMongoDB;
 import core.DBHelperMySql;
 
 import javax.servlet.ServletException;
@@ -33,6 +34,8 @@ public class DisplayData extends HttpServlet {
 
         DBHelperMySql obj = new DBHelperMySql();
         obj.display();
+        DBHelperMongoDB obj2 = new DBHelperMongoDB();
+        obj2.display();
 
 
     }
