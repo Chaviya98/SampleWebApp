@@ -1,5 +1,6 @@
 package service;
 
+import core.DBHelperMongoDB;
 import core.DBHelperMySql;
 
 import java.io.IOException;
@@ -43,6 +44,8 @@ public class InsertData extends HttpServlet {
 				"\n" + " Book Price "+bookPrice+"</h1>");
 		DBHelperMySql obj = new DBHelperMySql();
 		obj.add(bookID,bookTitle,bookPrice);
+		DBHelperMongoDB obj2 = new DBHelperMongoDB();
+		obj2.add(bookID,bookTitle,bookPrice);
 		writer.close();
 	}
 

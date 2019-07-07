@@ -1,4 +1,5 @@
 package service;
+import core.DBHelperMongoDB;
 import core.DBHelperMySql;
 
 import java.io.IOException;
@@ -38,6 +39,8 @@ public class UpdateData extends HttpServlet  {
                 "\n" + " Book Price "+bookPrice+"</h1>");
         DBHelperMySql obj = new DBHelperMySql();
         obj.update(bookID,bookTitle,bookPrice);
+        DBHelperMongoDB obj2 = new DBHelperMongoDB();
+        obj2.update(bookID,bookTitle,bookPrice);
         writer.close();
     }
 }

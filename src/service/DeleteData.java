@@ -1,5 +1,6 @@
 
 package service;
+import core.DBHelperMongoDB;
 import core.DBHelperMySql;
 
 import java.io.IOException;
@@ -29,11 +30,12 @@ public class DeleteData extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         bookID =  request.getParameter("bookID");
-
         PrintWriter writer = response.getWriter();
         writer.println("<h1>Hello Your Book Deleted - Book ID " + bookID + "\n" + "</h1>");
         DBHelperMySql obj = new DBHelperMySql();
         obj.delete(bookID);
+        DBHelperMongoDB obj2 = new DBHelperMongoDB();
+        obj2.delete(bookID);
         writer.close();
     }
 }
