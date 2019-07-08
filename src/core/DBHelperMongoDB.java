@@ -1,54 +1,56 @@
 package core;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
+import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.util.logging.Logger;
+
 public class DBHelperMongoDB {
+    private static final Logger LOGGER = Logger.getLogger(DBHelperMongoDB.class.getName());
     MongoCollection<Document> collection;
+    DBCollection table;
 
     public DBHelperMongoDB() {
-        MongoClientURI uri = new MongoClientURI("mongodb://chaveen:1234@first-shard-00-00-nzkcy." +
-                "mongodb.net:27017,first-shard-00-01-nzkcy.mongodb.net:27017,first-shard-00-02-nzkcy" +
-                ".mongodb.net:27017/test?ssl=true&replicaSet=First-shard-0&authSource=admin&retryWrites=true");
-        // Creating a Mongo client
-        MongoClient mongo = new MongoClient(uri);
 
-
-        // Accessing the database
-        MongoDatabase database = mongo.getDatabase("Test");
-
-        // Retrieving  collections
-        collection = database.getCollection("items");
+        MongoClient mongo = new MongoClient("localhost", 27017);
+        DB db = mongo.getDB("testdb");
+        table = db.getCollection("items");
+        LOGGER.info("MongoDb Connected ");
 
     }
 
 
     public void add(String bookID, String bookTitle, String bookPrice) {
-        Document book = new Document()
+        BasicDBObject book = new BasicDBObject()
                 .append("Book ID", bookID)
                 .append("Book Title", bookTitle)
                 .append("Book Price", bookPrice);
+        table.insert(book);
+        LOGGER.info("MongoDb 1 Row added ");
 
-        collection.insertOne(book);
     }
 
     public void delete(String bookID) {
-        collection.deleteOne(Filters.eq("Book ID", bookID));
+
+        BasicDBObject delete = new BasicDBObject();
+        delete.put("Book ID", bookID);
+        table.remove(delete);
+        LOGGER.info("MongoDb 1 Row deleted ");
     }
 
-    public void update(String bookID,String bookTitle,String bookPrice){
-        Bson old = new Document("Book ID",bookID);
-        Bson newData = new Document().append("Book Title",bookTitle).append("Book Price",bookPrice);
-        Bson updateDoc = new Document("$set",newData);
-        collection.updateOne(old,updateDoc);
-    }
-    public void display(){
-        System.out.println(collection.find());
+    public void update(String bookID, String bookTitle, String bookPrice) {
+        BasicDBObject old = new BasicDBObject("Book ID", bookID);
+        BasicDBObject newData = new BasicDBObject().append("Book Title", bookTitle)
+                .append("Book Price", bookPrice);
+        BasicDBObject updateDoc = new BasicDBObject("$set", newData);
+        table.update(old, updateDoc);
+        LOGGER.info("MongoDb 1 Row updated ");
+
 
     }
+
 }

@@ -1,4 +1,6 @@
 package core;
+import sun.rmi.runtime.Log;
+
 import java.sql.*;
 
 public class DBHelperMySql {
@@ -9,7 +11,7 @@ public class DBHelperMySql {
         {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager
-                    .getConnection("jdbc:mysql://localhost:3306/bookitems", "root", "");
+                    .getConnection("jdbc:mysql://localhost:3306/bookitems", "user", "password");
 
             stmt = connection.createStatement();
 
@@ -26,7 +28,7 @@ public class DBHelperMySql {
         try
         {
 
-            stmt.execute("INSERT INTO ITEMS (ID,TITLE,PRICE) "
+            stmt.execute("INSERT INTO items (ID,TITLE,PRICE) "
                     + "VALUES ("+bookID+",'"+bookTitle+"',"+bookPrice+")");
         }
         catch (Exception e) {
@@ -44,7 +46,7 @@ public class DBHelperMySql {
         try
         {
 
-            stmt.execute("DELETE FROM ITEMS WHERE ID IN ('"+bookID+"')");
+            stmt.execute("DELETE FROM items WHERE ID IN ('"+bookID+"')");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +63,7 @@ public class DBHelperMySql {
         try
         {
 
-            stmt.execute("UPDATE ITEMS SET TITLE =('"+bookTitle+"'),PRICE = ('"+bookPrice+"')WHERE ID = ('"+bookID+"')");
+            stmt.execute("UPDATE items SET TITLE =('"+bookTitle+"'),PRICE = ('"+bookPrice+"')WHERE ID = ('"+bookID+"')");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -74,11 +76,10 @@ public class DBHelperMySql {
         }
     }
     public void display(){
-        String temp = "";
         Statement stmt = connect();
         try
         {
-            ResultSet resultSet = stmt.executeQuery("SELECT * FROM ITEMS ");
+            ResultSet resultSet = stmt.executeQuery("SELECT * FROM items ");
             ResultSetMetaData rsmd = resultSet.getMetaData();
             int columnsNumber = rsmd.getColumnCount();
             while (resultSet.next()) {
